@@ -2,6 +2,7 @@ package org.casecash;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CaseCashSystem {
     private HashMap<String, Student> students;
@@ -32,7 +33,11 @@ public class CaseCashSystem {
      * @return True if the student has not yet been created, false if the student with this name already exists.
      */
     public boolean init (String name, int initialBalance) {
-        if
+        if (students.containsKey(name)) return false;
+        else {
+            students.put(name, new Student(name, initialBalance));
+            return true;
+        }
     }
 
     /**
@@ -41,9 +46,25 @@ public class CaseCashSystem {
      * @param name The student to get the balance of.
      * @return The balance of the student.
      */
-    public int getBalance (String name) {}
+    public int getBalance (String name) {
+        return students.get(name).getBalance();
+    }
 
-    public boolean deposit (Student student, int amount) {}
+    /**
+     * Deposit money from a student account.
+     *
+     * @param student The student to deposit money to.
+     * @param amount The amount of money to deposit to into the account.
+     * @return True if the input amount is positive, otherwise false.
+     */
+    public boolean deposit (Student student, int amount) {
+        if (amount < 0)
+            return false;
+        else {
+            student.updateBalance(student.getBalance() + amount);
+            return true;
+        }
+    }
 
     /**
      * Transfers the amount from studentA account to studentB account. This function should return true
@@ -56,7 +77,15 @@ public class CaseCashSystem {
      * @param amount Amount of money to transfer.
      * @return Success of money transfer.
      */
-    public boolean transfer (Student studentA, Student studentB, int amount) {}
+    public boolean transfer (Student studentA, Student studentB, int amount) {
+        if (studentA.getBalance() - amount > 0)
+            return false;
+        else {
+            studentA.updateBalance(studentA.getBalance() - amount);
+            studentB.updateBalance(studentB.getBalance() + amount);
+            return true;
+        }
+    }
 
     /**
      * Remove money from a student account. If the withdraw fails because it would make the balance negative, the
@@ -64,7 +93,14 @@ public class CaseCashSystem {
      *
      * @return True if remove is successful, and return false if removing will result in a negative balance.
      */
-    public boolean withdraw ()
+    public boolean withdraw (Student student, int amount) {
+        if (student.getBalance() - amount < 0)
+            return false;
+        else {
+            student.updateBalance(student.getBalance() - amount);
+            return true;
+        }
+    }
 
     /**
      * Returns a list of student names in alphabetical order. You are not allowed to use the Java sorting
@@ -93,10 +129,15 @@ public class CaseCashSystem {
 
     public static class Student {
         private String name;
-        private int balance;
+        private int balance = 0;
 
         private Student(String name) {
-            this.name = name;
+            setName(name);
+        }
+
+        private Student(String name, int initialBalance) {
+            setName(name);
+            updateBalance(initialBalance);
         }
 
         public String getName() {
@@ -112,7 +153,11 @@ public class CaseCashSystem {
         }
 
         public void updateBalance(int newAmount) {
+            if (newAmount < 0)
+                throw new Student.NegativeBalanceError();
             this.balance = newAmount;
         }
+
+        public static class NegativeBalanceError extends RuntimeException {}
     }
 }
