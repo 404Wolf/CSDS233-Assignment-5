@@ -1,8 +1,10 @@
 package org.casecash;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 public class CaseCashSystem {
     private HashMap<String, Student> students;
@@ -23,7 +25,9 @@ public class CaseCashSystem {
      * @param commands List of commands to run for simulation.
      * @return The output of the result of running each respective command.
      */
-    public List<String> runSimulation (List<String> commands) {}
+    public List<String> runSimulation (List<String> commands) {
+        return new ArrayList<String>();
+    }
 
     /**
      * Initializes a student with a name and an initial account balance. InitialBalance cannot be negative.
@@ -46,6 +50,10 @@ public class CaseCashSystem {
      * @param name The student to get the balance of.
      * @return The balance of the student.
      */
+    public int getBalance (Student name) {
+        return name.getBalance();
+    }
+
     public int getBalance (String name) {
         return students.get(name).getBalance();
     }
@@ -66,6 +74,10 @@ public class CaseCashSystem {
         }
     }
 
+    public boolean deposit (String student, int amount) {
+        return deposit(students.get(student), amount);
+    }
+
     /**
      * Transfers the amount from studentA account to studentB account. This function should return true
      * if transferring is successful, and return false if transferring money from A to B will result in a
@@ -78,13 +90,17 @@ public class CaseCashSystem {
      * @return Success of money transfer.
      */
     public boolean transfer (Student studentA, Student studentB, int amount) {
-        if (studentA.getBalance() - amount > 0)
+        if (studentA.getBalance() - amount < 0)
             return false;
         else {
             studentA.updateBalance(studentA.getBalance() - amount);
             studentB.updateBalance(studentB.getBalance() + amount);
             return true;
         }
+    }
+
+    public boolean transfer (String studentA, String studentB, int amount) {
+        return transfer(students.get(studentA), students.get(studentB), amount);
     }
 
     /**
@@ -102,13 +118,26 @@ public class CaseCashSystem {
         }
     }
 
+    public boolean withdraw (String student, int amount) {
+        return withdraw(students.get(student), amount);
+    }
+
+    /**
+     * Purge the CaseCashSystem.
+     */
+    public void purge () {
+        students = new HashMap<String, Student>();
+    }
+
     /**
      * Returns a list of student names in alphabetical order. You are not allowed to use the Java sorting
      * functions, and should write your own.
      *
      * @implNote Implements merge sort.
      */
-    public List<Student> sortName() {}
+    public List<Student> sortName() {
+        return new ArrayList<Student>();
+    }
 
     /**
      * List of students sorted by current balance.
@@ -116,7 +145,9 @@ public class CaseCashSystem {
      * @implNote Implements quick sort.
      * @return a list of student names in the order of smallest balance to largest balance in their account
       */
-    public List<Student> sortBalance() {}
+    public List<Student> sortBalance() {
+        return new ArrayList<Student>();
+    }
 
     /**
      * Obtain the list of all students currently in the case cash system.
