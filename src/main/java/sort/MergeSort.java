@@ -1,13 +1,12 @@
 package sort;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 public class MergeSort <T extends Comparable<T>> implements Sorter {
     public static <T extends Comparable<T>> void sort (List<T> arr) {
+        if (arr.isEmpty())
+            return;
         mergeSort(arr, 0, arr.size() - 1);
     }
 
@@ -39,7 +38,7 @@ public class MergeSort <T extends Comparable<T>> implements Sorter {
                 auxArr.add(arr.get(leftPointer));
                 leftPointer++;
             }
-            // If the right array's j-th element is less place it ini the auxiliary array
+            // If the right array's j-th element is less place it in the auxiliary array
             else if (arr.get(leftPointer).compareTo(arr.get(rightPointer)) > 0) {
                 auxArr.add(arr.get(rightPointer));
                 rightPointer++;

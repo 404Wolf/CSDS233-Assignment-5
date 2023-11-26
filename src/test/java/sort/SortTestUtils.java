@@ -3,13 +3,14 @@ package sort;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SortTestUtils {
-    public static <T extends Comparable<T>> void sortIntegers(Consumer<ArrayList<T>> sorter) {
+    public static <T extends Comparable<T>> void sortIntegers(Consumer<List<T>> sorter) {
         // Build a non-sorted array
         ArrayList<Integer> ints = new ArrayList<>();
         ints.add(1);
@@ -36,7 +37,7 @@ public class SortTestUtils {
         assertEquals(66, ints.get(5));
     }
 
-    public static <T extends Comparable<T>> void sortStrings(Consumer<ArrayList<T>> sorter) {
+    public static <T extends Comparable<T>> void sortStrings(Consumer<List<T>> sorter) {
         // Build a non-sorted array of strings
         ArrayList<String> words = new ArrayList<>();
         words.add("apple");
@@ -67,5 +68,12 @@ public class SortTestUtils {
         assertEquals("pear", words.get(6));
         assertEquals("pineapple", words.get(7));
         assertEquals("plum", words.get(8));
+    }
+
+    public static void testVaryingSizes(Consumer<List<Integer>> sorter) {
+        List<Integer> arr = new ArrayList<>();
+        sorter.accept(arr);
+        arr.add(1);
+        sorter.accept(arr);
     }
 }
