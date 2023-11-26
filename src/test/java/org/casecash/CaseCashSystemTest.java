@@ -46,6 +46,12 @@ class CaseCashSystemTest {
 
     @Test
     void deposit() {
+        CaseCashSystem system = getTestSystemA();
+        assertTrue(system.deposit("joe", 20));
+        assertEquals(64, system.getBalance("joe"));
+        assertFalse(system.deposit("joe", -100));
+        assertTrue(system.deposit("joe", 20));
+        assertEquals(84, system.getBalance("joe"));
     }
 
     @Test
