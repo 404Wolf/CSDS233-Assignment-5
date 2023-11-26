@@ -28,12 +28,12 @@ public class CaseCashSystem {
      * @param commands List of commands to run for simulation.
      * @return The output of the result of running each respective command.
      */
-    public List<String> runSimulation (List<String> commands) {
+    public static List<String> runSimulation (List<String> commands) {
         CaseCashSystem system = new CaseCashSystem();
         List<String> output = new LinkedList<>();
 
         for (String commandStr : commands) {
-            List<String> command = List.of(commandStr.split(" "));
+            List<String> command = List.of(commandStr.split(", "));
             switch (command.get(0)) {
                 case "INIT" -> output.add(String.valueOf(system.init(command.get(1), Integer.parseInt(command.get(2)))));
                 case "GET" -> output.add(String.valueOf(system.getBalance(command.get(1))));
@@ -69,7 +69,7 @@ public class CaseCashSystem {
     public boolean init (String name, int initialBalance) {
         if (students.containsKey(name)) return false;
         else {
-            students.put(name, new Student(name, initialBalance));
+            students.put(name.toLowerCase(), new Student(name, initialBalance));
             return true;
         }
     }
@@ -85,7 +85,7 @@ public class CaseCashSystem {
     }
 
     public int getBalance (String name) {
-        return students.get(name).getBalance();
+        return students.get(name.toLowerCase()).getBalance();
     }
 
     /**
@@ -105,7 +105,7 @@ public class CaseCashSystem {
     }
 
     public boolean deposit (String student, int amount) {
-        return deposit(students.get(student), amount);
+        return deposit(students.get(student.toLowerCase()), amount);
     }
 
     /**
@@ -130,7 +130,7 @@ public class CaseCashSystem {
     }
 
     public boolean transfer (String studentA, String studentB, int amount) {
-        return transfer(students.get(studentA), students.get(studentB), amount);
+        return transfer(students.get(studentA.toLowerCase()), students.get(studentB.toLowerCase()), amount);
     }
 
     /**
@@ -149,7 +149,7 @@ public class CaseCashSystem {
     }
 
     public boolean withdraw (String student, int amount) {
-        return withdraw(students.get(student), amount);
+        return withdraw(students.get(student.toLowerCase()), amount);
     }
 
     /**
