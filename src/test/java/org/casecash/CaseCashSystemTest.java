@@ -152,58 +152,58 @@ class CaseCashSystemTest {
     @Test
     void sortName() {
         CaseCashSystem system;
-        List<CaseCashSystem.Student> sortedNames;
+        List<String> sortedNames;
 
         system = getTestSystemA();
         sortedNames = system.sortName();
-        assertEquals(sortedNames.get(0).getName(), "bob");
-        assertEquals(sortedNames.get(1).getName(), "joe");
-        assertEquals(sortedNames.get(2).getName(), "peter");
-        assertEquals(sortedNames.get(3).getName(), "steve");
+        assertEquals(sortedNames.get(0), "bob");
+        assertEquals(sortedNames.get(1), "joe");
+        assertEquals(sortedNames.get(2), "peter");
+        assertEquals(sortedNames.get(3), "steve");
 
         system = getTestSystemB();
         sortedNames = system.sortName();
-        assertEquals(sortedNames.get(0).getName(), "joseph");
-        assertEquals(sortedNames.get(1).getName(), "marry");
-        assertEquals(sortedNames.get(2).getName(), "michael");
-        assertEquals(sortedNames.get(3).getName(), "wonda");
+        assertEquals(sortedNames.get(0), "joseph");
+        assertEquals(sortedNames.get(1), "marry");
+        assertEquals(sortedNames.get(2), "michael");
+        assertEquals(sortedNames.get(3), "wonda");
 
         system = getTestSystemC();
         sortedNames = system.sortName();
-        assertEquals(sortedNames.get(0).getName(), "albert");
-        assertEquals(sortedNames.get(1).getName(), "robert");
-        assertEquals(sortedNames.get(2).getName(), "sam");
-        assertEquals(sortedNames.get(3).getName(), "steve");
+        assertEquals(sortedNames.get(0), "albert");
+        assertEquals(sortedNames.get(1), "robert");
+        assertEquals(sortedNames.get(2), "sam");
+        assertEquals(sortedNames.get(3), "steve");
     }
 
     @Test
     void sortBalance() {
         CaseCashSystem system;
-        List<CaseCashSystem.Student> sortedNames;
+        List<String> sortedNames;
 
         for (int i = 0; i < 100; i++) {
             system = getTestSystemA();
             sortedNames = system.sortBalance();
-            assertEquals("peter", sortedNames.get(0).getName());
-            assertEquals("joe", sortedNames.get(1).getName());
-            assertEquals("steve", sortedNames.get(2).getName());
-            assertEquals("bob", sortedNames.get(3).getName());
+            assertEquals("peter", sortedNames.get(0));
+            assertEquals("joe", sortedNames.get(1));
+            assertEquals("steve", sortedNames.get(2));
+            assertEquals("bob", sortedNames.get(3));
 
             system = getTestSystemB();
             sortedNames = system.sortBalance();
-            assertEquals("joseph", sortedNames.get(0).getName());
-            assertEquals("marry", sortedNames.get(1).getName());
-            assertEquals("michael", sortedNames.get(2).getName());
-            assertEquals("wonda", sortedNames.get(3).getName());
+            assertEquals("joseph", sortedNames.get(0));
+            assertEquals("marry", sortedNames.get(1));
+            assertEquals("michael", sortedNames.get(2));
+            assertEquals("wonda", sortedNames.get(3));
 
             system = getTestSystemC();
             system.init("zed", 22222222);
             sortedNames = system.sortBalance();
-            assertEquals("robert", sortedNames.get(0).getName());
-            assertEquals("steve", sortedNames.get(1).getName());
-            assertEquals("albert", sortedNames.get(2).getName());
-            assertEquals("sam", sortedNames.get(3).getName());
-            assertEquals("zed", sortedNames.get(4).getName());
+            assertEquals("robert", sortedNames.get(0));
+            assertEquals("steve", sortedNames.get(1));
+            assertEquals("albert", sortedNames.get(2));
+            assertEquals("sam", sortedNames.get(3));
+            assertEquals("zed", sortedNames.get(4));
         }
     }
 }

@@ -165,11 +165,15 @@ public class CaseCashSystem {
      *
      * @implNote Implements merge sort.
      */
-    public List<Student> sortName() {
-        ArrayList<Student> sortedStudents = new ArrayList<Student>(students.values());
+    public List<String> sortName() {
+        List<Student> sortedStudents = new ArrayList<Student>(students.values());
         sortedStudents.forEach(student -> student.setCompareBy(Student.CompareOptions.NAME));
         MergeSort.sort(sortedStudents);
-        return sortedStudents;
+
+        // Create an array of just the names of the students in sorted order and return it
+        List<String> sortedStudentsNames = new LinkedList<>();
+        sortedStudents.forEach(student -> sortedStudentsNames.add(student.getName()));
+        return sortedStudentsNames;
     }
 
     /**
@@ -178,11 +182,16 @@ public class CaseCashSystem {
      * @implNote Implements quick sort.
      * @return a list of student names in the order of smallest balance to largest balance in their account
       */
-    public List<Student> sortBalance() {
-        ArrayList<Student> sortedStudents = new ArrayList<>(students.values());
+    public List<String> sortBalance() {
+        // Sort the students by balance
+        List<Student> sortedStudents = new ArrayList<>(students.values());
         sortedStudents.forEach(student -> student.setCompareBy(Student.CompareOptions.BALANCE));
         QuickSort.sort(sortedStudents);
-        return sortedStudents;
+
+        // Create a list that stores only the names of the new student balances
+        List<String> sortedStudentsNames = new LinkedList<>();
+        sortedStudents.forEach(student -> sortedStudentsNames.add(student.getName()));
+        return sortedStudentsNames;
     }
 
     /**
