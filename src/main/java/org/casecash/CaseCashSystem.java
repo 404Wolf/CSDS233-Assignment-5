@@ -96,7 +96,7 @@ public class CaseCashSystem {
      * @return True if the input amount is positive, otherwise false.
      */
     public boolean deposit (Student student, int amount) {
-        if (amount < 0)
+        if (student == null || amount < 0)
             return false;
         else {
             student.updateBalance(student.getBalance() + amount);
@@ -120,7 +120,7 @@ public class CaseCashSystem {
      * @return Success of money transfer.
      */
     public boolean transfer (Student studentA, Student studentB, int amount) {
-        if (studentA.getBalance() - amount < 0)
+        if (studentA == null || studentB == null || studentA.getBalance() - amount < 0)
             return false;
         else {
             studentA.updateBalance(studentA.getBalance() - amount);
@@ -140,7 +140,7 @@ public class CaseCashSystem {
      * @return True if remove is successful, and return false if removing will result in a negative balance.
      */
     public boolean withdraw (Student student, int amount) {
-        if (student.getBalance() - amount < 0)
+        if (student == null || student.getBalance() - amount < 0)
             return false;
         else {
             student.updateBalance(student.getBalance() - amount);
@@ -228,7 +228,7 @@ public class CaseCashSystem {
         }
 
         private Student(String name, int initialBalance) {
-            setName(name);
+            setName(name.toLowerCase());
             updateBalance(initialBalance);
         }
 
@@ -248,6 +248,11 @@ public class CaseCashSystem {
             if (newAmount < 0)
                 throw new Student.NegativeBalanceError();
             this.balance = newAmount;
+        }
+
+        @Override
+        public String toString() {
+            return "Student(name=" + getName().toLowerCase() + ", balance=" + getBalance() + ")";
         }
 
         @Override
