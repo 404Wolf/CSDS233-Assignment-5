@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MergeSort <T extends Comparable<T>> implements Sorter {
-    public static <T extends Comparable<T>> void sort (List<T> arr) {
-        if (arr.isEmpty())
-            return;
-        mergeSort(arr, 0, arr.size() - 1);
-    }
+    public static <T extends Comparable<T>> void sort (List<T> arr) { mergeSort(arr, 0, arr.size() - 1); }
 
     private static <T extends Comparable<T>> void mergeSort(List<T> arr, int left, int right) {
         if (left < right) {

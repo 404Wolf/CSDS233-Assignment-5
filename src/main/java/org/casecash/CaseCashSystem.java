@@ -5,6 +5,7 @@ import org.sort.QuickSort;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -28,13 +29,40 @@ public class CaseCashSystem {
      * @return The output of the result of running each respective command.
      */
     public List<String> runSimulation (List<String> commands) {
-        return new ArrayList<String>();
+        CaseCashSystem system = new CaseCashSystem();
+        List<String> output = new LinkedList<>();
+
+        for (String commandStr : commands) {
+            List<String> command = List.of(commandStr.split(" "));
+            switch (command.get(0)) {
+                case "INIT" -> output.add(String.valueOf(system.init(command.get(1), Integer.parseInt(command.get(2)))));
+                case "GET" -> output.add(String.valueOf(system.getBalance(command.get(1))));
+                case "DEPOSIT" -> output.add(String.valueOf(
+                        system.deposit(command.get(1), Integer.parseInt(command.get(2))))
+                );
+                case "TRANSFER" -> output.add(String.valueOf(
+                        system.transfer(command.get(1), command.get(2), Integer.parseInt(command.get(3))))
+                );
+                case "SORT" -> {
+                    switch (command.get(1)) {
+                        case "balance" -> output.add(system.sortBalance().toString());
+                        case "name" -> output.add(system.sortName().toString());
+                    }
+                }
+                case "WITHDRAW" -> output.add(
+                        String.valueOf(
+                                system.withdraw(command.get(1), Integer.parseInt(command.get(2)))
+                        )
+                );
+            }
+        }
+        return output;
     }
 
     /**
      * Initializes a student with a name and an initial account balance. InitialBalance cannot be negative.
      *
-     * @param name Name of the student to create.
+     * @param name           Name of the student to create.
      * @param initialBalance Initial balance to give the student being created.
      * @return True if the student has not yet been created, false if the student with this name already exists.
      */
@@ -151,7 +179,7 @@ public class CaseCashSystem {
      * @return a list of student names in the order of smallest balance to largest balance in their account
       */
     public List<Student> sortBalance() {
-        ArrayList<Student> sortedStudents = new ArrayList<Student>(students.values());
+        ArrayList<Student> sortedStudents = new ArrayList<>(students.values());
         sortedStudents.forEach(student -> student.setCompareBy(Student.CompareOptions.BALANCE));
         QuickSort.sort(sortedStudents);
         return sortedStudents;

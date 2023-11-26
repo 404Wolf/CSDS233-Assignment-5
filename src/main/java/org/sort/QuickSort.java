@@ -22,16 +22,19 @@ public class QuickSort {
             int left,
             int right
     ) {
-        if (right > left) {
-            int splitAt = partition(arr, pivot, left, right);
-            quicksort(arr, (left + splitAt) / 2, left, splitAt);
-            quicksort(arr, (right + splitAt) / 2, splitAt + 1, right);
+        assert pivot >= left && pivot <= right;
+        if (right - left >= 1) {
+            int splitAt = partition(arr, arr.get(pivot), left, right);
+            assert splitAt >= left && splitAt <= right;
+            quicksort(arr, randomInt(left, splitAt), left, splitAt);
+            if (splitAt + 1 <= right)
+                quicksort(arr, randomInt(splitAt + 1, right), splitAt + 1, right);
         }
     }
 
     private static <T extends Comparable<T>> int partition(
             List<T> arr,
-            int pivot,
+            T pivot,
             int left,
             int right
     ) {
@@ -39,18 +42,19 @@ public class QuickSort {
         int rightPointer = right;
 
         while (true) {
-            while (arr.get(leftPointer).compareTo(arr.get(pivot)) < 0)
+            while (arr.get(leftPointer).compareTo(pivot) < 0)
                 leftPointer++;
 
-            while (arr.get(rightPointer).compareTo(arr.get(pivot)) > 0)
+            while (arr.get(rightPointer).compareTo(pivot) > 0)
                 rightPointer--;
 
-            if (leftPointer < rightPointer) {
+            if (rightPointer <= leftPointer)
+                return rightPointer;
+            else {
                 swap(arr, leftPointer, rightPointer);
                 leftPointer++;
                 rightPointer--;
-            } else
-                return rightPointer;
+            }
         }
     }
 
@@ -61,7 +65,10 @@ public class QuickSort {
     }
 
     private static int randomInt(int min, int max) {
-        return min + random.nextInt(max + 1);
+        if (max == min)
+            return max;
+        assert max > min;
+        return random.nextInt(max - min + 1) + min;
     }
 
     private static int randomInt(int max) {
