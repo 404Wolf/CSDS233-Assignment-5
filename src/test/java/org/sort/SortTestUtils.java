@@ -1,4 +1,4 @@
-package sort;
+package org.sort;
 
 import org.junit.jupiter.api.Test;
 

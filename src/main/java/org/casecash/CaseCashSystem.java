@@ -1,7 +1,7 @@
 package org.casecash;
 
-import sort.MergeSort;
-import sort.QuickSort;
+import org.sort.MergeSort;
+import org.sort.QuickSort;
 
 import java.util.ArrayList;
 import java.util.HashMap;

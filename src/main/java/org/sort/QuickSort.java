@@ -1,4 +1,4 @@
-package sort;
+package org.sort;
 
 import java.util.*;
 
