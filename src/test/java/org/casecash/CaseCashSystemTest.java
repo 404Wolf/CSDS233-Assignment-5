@@ -96,6 +96,12 @@ class CaseCashSystemTest {
         inputCommands.add("SORT, name");
         expectedOutput.add("[bob, joe, peter, steve]");
 
+        // Test withdrawals
+        inputCommands.add("WITHDRAW, joe, 30");
+        expectedOutput.add("true");
+        inputCommands.add("GET, joe");
+        expectedOutput.add("44");
+
         // Run the simulation
         List<String> output = CaseCashSystem.runSimulation(inputCommands);
         assertEquals(expectedOutput, output);
