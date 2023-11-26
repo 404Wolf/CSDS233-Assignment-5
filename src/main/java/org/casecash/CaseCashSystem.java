@@ -1,6 +1,8 @@
 package org.casecash;
 
-import java.sql.Array;
+import sort.MergeSort;
+import sort.QuickSort;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,7 +138,10 @@ public class CaseCashSystem {
      * @implNote Implements merge sort.
      */
     public List<Student> sortName() {
-        return new ArrayList<Student>();
+        ArrayList<Student> sortedStudents = new ArrayList<Student>(students.values());
+        sortedStudents.forEach(student -> student.setCompareBy(Student.CompareOptions.NAME));
+        MergeSort.sort(sortedStudents);
+        return sortedStudents;
     }
 
     /**
@@ -146,7 +151,10 @@ public class CaseCashSystem {
      * @return a list of student names in the order of smallest balance to largest balance in their account
       */
     public List<Student> sortBalance() {
-        return new ArrayList<Student>();
+        ArrayList<Student> sortedStudents = new ArrayList<Student>(students.values());
+        sortedStudents.forEach(student -> student.setCompareBy(Student.CompareOptions.BALANCE));
+        QuickSort.sort(sortedStudents);
+        return sortedStudents;
     }
 
     /**
@@ -158,9 +166,25 @@ public class CaseCashSystem {
         return students.values().stream().toList();
     }
 
-    public static class Student {
+    public static class Student implements Comparable<Student> {
+        /**
+         * Current nzame of this student.
+         */
         private String name;
+
+        /**
+         * Current balance of this student.
+         */
         private int balance = 0;
+
+        /**
+         * How to compare this given student to any other given student. Affects this.compareTo(Student other)
+         */
+        private CompareOptions compareBy = CompareOptions.NAME;
+
+        public enum CompareOptions {
+            NAME, BALANCE
+        }
 
         private Student(String name) {
             setName(name);
@@ -187,6 +211,26 @@ public class CaseCashSystem {
             if (newAmount < 0)
                 throw new Student.NegativeBalanceError();
             this.balance = newAmount;
+        }
+
+        @Override
+        public int compareTo(Student other) {
+            return compareTo(other, getCompareBy());
+        }
+
+        public int compareTo(Student other, Student.CompareOptions by) {
+            return switch (by) {
+                case NAME -> this.getName().compareTo(other.getName());
+                case BALANCE -> this.getBalance() - other.getBalance();
+            };
+        }
+
+        public CompareOptions getCompareBy() {
+            return compareBy;
+        }
+
+        public void setCompareBy(CompareOptions compareBy) {
+            this.compareBy = compareBy;
         }
 
         public static class NegativeBalanceError extends RuntimeException {}

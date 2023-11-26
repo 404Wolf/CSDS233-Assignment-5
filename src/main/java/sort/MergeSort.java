@@ -1,7 +1,10 @@
 package sort;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 public class MergeSort <T extends Comparable<T>> implements Sorter {
     public static <T extends Comparable<T>> void sort (List<T> arr) {

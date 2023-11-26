@@ -1,5 +1,7 @@
 package org.casecash;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,21 +34,21 @@ class CaseCashSystemTest {
         return system;
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void runSimulation() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getBalance() {
         CaseCashSystem system = getTestSystemA();
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void deposit() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void transfer() {
         CaseCashSystem system = getTestSystemA();
 
@@ -60,7 +62,7 @@ class CaseCashSystemTest {
         assertEquals(24, system.getBalance("joe"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void withdraw() {
         CaseCashSystem system = getTestSystemA();
 
@@ -75,7 +77,7 @@ class CaseCashSystemTest {
         assertEquals(system.getBalance("joe"), 24);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void sortName() {
         CaseCashSystem system;
         List<CaseCashSystem.Student> sortedNames;
@@ -84,8 +86,8 @@ class CaseCashSystemTest {
         sortedNames = system.sortName();
         assertEquals(sortedNames.get(0).getName(), "bob");
         assertEquals(sortedNames.get(1).getName(), "joe");
-        assertEquals(sortedNames.get(2).getName(), "steve");
-        assertEquals(sortedNames.get(3).getName(), "joe");
+        assertEquals(sortedNames.get(2).getName(), "peter");
+        assertEquals(sortedNames.get(3).getName(), "steve");
 
         system = getTestSystemB();
         sortedNames = system.sortName();
@@ -102,7 +104,7 @@ class CaseCashSystemTest {
         assertEquals(sortedNames.get(3).getName(), "steve");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void sortBalance() {
         CaseCashSystem system;
         List<CaseCashSystem.Student> sortedNames;
