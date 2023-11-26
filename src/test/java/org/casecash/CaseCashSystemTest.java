@@ -125,8 +125,6 @@ class CaseCashSystemTest {
 
             system = getTestSystemB();
             sortedNames = system.sortBalance();
-            for (CaseCashSystem.Student student : sortedNames)
-                System.out.println(student.getName() + " - " + student.getBalance());
             assertEquals("joseph", sortedNames.get(0).getName());
             assertEquals("marry", sortedNames.get(1).getName());
             assertEquals("michael", sortedNames.get(2).getName());
