@@ -16,7 +16,7 @@ public class CaseCashSystem {
      * Instantiate the org.casecash.CaseCashSystem.
      */
     public CaseCashSystem () {
-        students = new HashMap<String, Student>();
+        students = new HashMap<>();
     }
 
     /**
