@@ -2,6 +2,7 @@ package org.casecash;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,12 +37,77 @@ class CaseCashSystemTest {
 
     @Test
     void runSimulation() {
+        List<String> expectedOutput = new LinkedList<>();
+        List<String> inputCommands = new LinkedList<>();
+
+        // Create all of the students from set A
+        inputCommands.add("INIT, joE, 44");
+        expectedOutput.add("true");
+        //
+        inputCommands.add("INIT, stEve, 50");
+        expectedOutput.add("true");
+        //
+        inputCommands.add("INIT, pEter, 33");
+        expectedOutput.add("true");
+        //
+        inputCommands.add("INIT, bob, 330");
+        expectedOutput.add("true");
+
+        // Assert the starting balances of all the students
+        inputCommands.add("GET, Joe");
+        expectedOutput.add("44");
+        //
+        inputCommands.add("GET, stEve");
+        expectedOutput.add("50");
+        //
+        inputCommands.add("GET, pEter");
+        expectedOutput.add("33");
+        //
+        inputCommands.add("GET, BoB");
+        expectedOutput.add("330");
+
+        // Give someone money and assert they got it
+        inputCommands.add("DEPOSIT, bob, 50");
+        expectedOutput.add("true");
+        inputCommands.add("GET, bob");
+        expectedOutput.add("380");
+
+        // Deposit to a student that does not exist
+        inputCommands.add("DEPOSIT, sam, 555");
+        expectedOutput.add("false");
+
+        // Deposit to make someone's balance negative
+        inputCommands.add("DEPOSIT, bob, -1000");
+        expectedOutput.add("false");
+
+        // Transfer money between two students
+        inputCommands.add("TRANSFER, bob, joe, 30");
+        expectedOutput.add("true");
+        inputCommands.add("GET, bob");
+        expectedOutput.add("350");
+        inputCommands.add("GET, joe");
+        expectedOutput.add("74");
+
+        // Make sure students can be sorted by balance
+        inputCommands.add("SORT, balance");
+        expectedOutput.add("[peter, steve, joe, bob]");
+
+        // Make sure students can be sorted by name
+        inputCommands.add("SORT, name");
+        expectedOutput.add("[bob, joe, peter, steve]");
+
+        // Run the simulation
+        List<String> output = CaseCashSystem.runSimulation(inputCommands);
+        assertEquals(expectedOutput, output);
     }
 
     @Test
     void getBalance() {
         CaseCashSystem system = getTestSystemA();
-
+        assertEquals(44, system.getBalance("joe"));
+        assertEquals(50, system.getBalance("steve"));
+        assertEquals(33, system.getBalance("peter"));
+        assertEquals(330, system.getBalance("bob"));
     }
 
     @Test
